@@ -10,7 +10,7 @@ pipeline {
         stage ('Build') {
            steps {
             sh "pwd"
-            dir('mernstackBlogApp/backend') {
+            dir('mernstackBlogApp') {
             sh "pwd"
             }
             sh "pwd"
