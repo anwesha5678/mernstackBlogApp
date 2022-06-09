@@ -1,0 +1,29 @@
+pipeline {
+     agent any
+     tools { nodejs 'node' }
+     stages {
+         stage ('Checkout SCM') {
+           steps {
+         checkout([$class: 'GitSCM', branches: [[name: '*/feature/dev-master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteconfigs: [[credentialsID: 'nodeReactProject', url: 'git@github.com:anwesha5678/mernstackBlogApp.git']]])
+           }
+         }
+        stage ('Build') {
+           steps {
+            sh "pwd"
+            dir('mernstackBlogApp/backend') {
+            sh "pwd"
+            }
+            sh "pwd"
+            sh "git pull origin feature/dev-master"
+            sh "npm install"
+            sh "pm2 restart mernstackBlogApp/backend"
+      }
+         }
+        stage('Deliver') {
+            steps {
+            echo 'giving permission'
+            sh "chmod u+x ./jenkins/scripts/deliver.sh"
+       }
+         }
+     }
+}
